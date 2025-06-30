@@ -8,6 +8,6 @@ spec:
     app: nginx
   ports:
     - protocol: TCP
-      port: 8181
+      port: 80
       targetPort: 8181
       nodePort: 30181
