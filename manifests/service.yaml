@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: nginx
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: nginx
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 8181
-      nodePort: 30181
+      port: 8181
+      targetPort: 80 #must be equal containerPort in pod

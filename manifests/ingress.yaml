@@ -16,4 +16,4 @@ spec:
           service:
             name: nginx
             port:
-              number: 80
+              number: 8181 # must be equal service port
