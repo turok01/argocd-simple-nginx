@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: nginx
-      app.kubernetes.io/name: vault
+      #app.kubernetes.io/name: vault
   template:
     metadata:
       labels:
