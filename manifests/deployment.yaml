@@ -9,13 +9,26 @@ spec:
   selector:
     matchLabels:
       app: nginx
+      app.kubernetes.io/name: vault
   template:
     metadata:
       labels:
         app: nginx
+        app.kubernetes.io/name: vault
+      annotations:
+        vault.security.banzaicloud.io/vault-addr: "http://vault.vault.svc:8200" # optional, the address of the Vault service, default values is https://vault:8200
+        vault.security.banzaicloud.io/vault-role: "carbon"
+        vault.security.banzaicloud.io/vault-skip-verify: "true" # optional, skip TLS verification of the Vault server certificate
+        #vault.security.banzaicloud.io/vault-tls-secret: "vault-tls" # optional, the name of the Secret where the Vault CA cert is, if not defined it is not mounted
+        vault.security.banzaicloud.io/vault-path: "kubernetes" # optional, the Kubernetes Auth mount path in Vault the default value is "kubernetes"
+        #vault.security.banzaicloud.io/vault-env-from-path: "carbonsecret/data/prod-secrets" # extract all env vars
     spec:
+      serviceAccountName: sa-nginx-example
       containers:
       - name: nginx
         image: nginx:latest
         ports:
         - containerPort: 80
+        env:
+          - name: KK_DB_PASS
+            value: vault:carbonsecret/data/prod-secrets#KK_DB_PASS
